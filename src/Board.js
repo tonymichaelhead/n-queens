@@ -249,12 +249,33 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var counter = 0;
+      var rows = this.rows();
+    
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i][minorDiagonalColumnIndexAtFirstRow] === 1) {
+          counter++;
+        }
+        minorDiagonalColumnIndexAtFirstRow--;
+      }
+    //check majorDiagonalINcex at row i
+      //if 1 is found, increment counter
+    //iterate over rows
+    //increment i
+    //increment majorDiagonalColumnIndexAtFirstRow  
+      return counter > 1; 
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var rows = this.rows();
+      var hasConflicts = false;
+      for (var i = 0; i < rows.length + 2; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          hasConflicts = true;
+        }          
+      }
+      return hasConflicts; // fixme
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/

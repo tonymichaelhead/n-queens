@@ -17,6 +17,8 @@
 
 window.findNRooksSolution = function(n) {
   var solution = undefined; //fixme
+  var newMatrix = makeEmptyMatrix(5);
+  console.log(newMatrix);
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
