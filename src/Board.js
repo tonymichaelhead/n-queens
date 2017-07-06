@@ -79,12 +79,39 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      //iterate through array ===  rowIndex and check if 1 exists
+      var row = this.get(rowIndex);
+      // var oneCount = row.reduce(function(ones, col) {
+      //   if (col === 1) {
+      //     return ones += 1;
+      //   }   
+      // }, 0);
+      var count = 0;
+      for ( var i = 0; i < row.length; i++) {
+        if (row[i] === 1) {
+          count++;
+        }    
+      }
+      //if so, return true.
+      //else return false.
+      //return count > 1;
+      return count > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      //iterate over rows and invoke hasRowConflictAt
+      var count = 0;
+      for (var i = 0; i < this.rows().length; i++) {
+        if (this.hasRowConflictAt(i)) {
+        //if (this.rows()[i].this.hasRowConflictAt(i)) {
+          count++;   
+        }    
+                  
+      }
+      //keep track with wasFound variable
+      //return wasFound variable
+      return count > 0;
     },
 
 
@@ -93,13 +120,44 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+    columnMaker: function(colIndex) {
+      var resultingArray = [];
+      //iterate over .rows()
+      var rows = this.rows();
+      rows.forEach(function(row) {
+        resultingArray.push(row[colIndex]);
+      });
+      return resultingArray;
+    },
+    
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var wasFound = this.columnMaker(colIndex).reduce(function(counter, item) {
+        if (item === 1) {
+          counter++;
+          return counter;
+        } else {
+          return counter;
+        }
+      }, 0); 
+      return wasFound > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      //initialize empty array
+      //iterate over this.rows()
+      var wasFound = false;
+      //var resultingArray = [];
+      var rows = this.rows();
+      for (var i = 0; i < rows[0].length; i++) {
+        //resultingArray.push(columnMaker(i));
+        if (this.hasColConflictAt(i)) {
+          wasFound = true;  
+        }  
+      }
+      //for each row [index] invoke columnMaker(i) and push results into empty array
+      //invoke hasAnyRowConflicts
+      return wasFound;
     },
 
 
