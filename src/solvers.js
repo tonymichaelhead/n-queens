@@ -38,24 +38,48 @@ window.findNRooksSolution = function(n) {
     }
     
   } 
-  //check for collisions
-  //if none,
-    //continue begin placing new pieces from the last point checked
-    
-  //if solution is found,
-  //return solution 
-  //console.log(newMatrix);
   solution = newBoard.rows();
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
-};
+};  
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
-
+  var solutionCount = 0; //fixme
+  
+  var newBoard = new Board({'n': n});
+  var rows = newBoard.rows();
+  var currentRowIndex = 0; 
+  var currentColIndex = 0; 
+  
+  var recurses = function(currentRowIndex) {
+    // if (solutionCount === 1) {
+    //   return;
+    // } 
+    if (currentRowIndex === n) {
+      solutionCount++;
+  
+      console.log(JSON.stringify(rows));
+      //newBoard = new Board({'n': n});
+      return;
+    }
+  
+    for (var i = 0; i < rows.length; i++) {
+      newBoard.togglePiece(currentRowIndex, i);
+    
+      if (!newBoard.hasAnyColConflicts() && !newBoard.hasAnyRowConflicts()) {
+      
+        currentRowIndex++;
+        recurses(currentRowIndex);
+        newBoard.togglePiece(currentRowIndex, i);
+      
+      } 
+    }    
+  };
+  recurses(currentRowIndex);  
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+  return solutionCount;  
+  
 };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
